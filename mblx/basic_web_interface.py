@@ -96,13 +96,13 @@ class BasicWebInterface(Service):
 
         # setup setup app
         self.log.info('setup aiohttp app')
-        self.handler = app.make_handler()
 
 
     async def on_start(self):
         await super().on_start()
         await self.setup_server()
 
+        self.handler = self.app.make_handler()
         self.srv = await self.loop.create_server(self.handler, '0.0.0.0', self.port)
         self.log.info('serving on' + str(self.srv.sockets[0].getsockname()))
 
